@@ -17,4 +17,6 @@ jobs:
       - name: Run container script again
         run: ./container.sh
 
+      - name: Build my Docker image
+        run: docker build -t my-nginx-image .
 
