@@ -20,3 +20,12 @@ jobs:
       - name: Build my Docker image
         run: docker build -t my-nginx-image .
 
+      - name: Start my Docker container
+        run: docker run -d --name my-web -p 8080:8000 my-nginx-image
+
+      - name: Get webpage with curl
+        run: curl http://localhost:8080
+
+      - name: Remove my Docker container
+        run: docker rm -f my-web
+
