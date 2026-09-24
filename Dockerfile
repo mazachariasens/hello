@@ -1,11 +1,10 @@
-FROM nginx
+FROM python:3-alpine
 
 COPY index.html /usr/share/nginx/html/index.html
 
-RUN sed -i 's/listen .*80;/listen 8000;/' /etc/nginx/conf.d/default.conf
-
 EXPOSE 8000
 
+CMD ["python3", "-m", "http.server", "8000", "--directory", "/usr/share/nginx/html"]
 
 
 
