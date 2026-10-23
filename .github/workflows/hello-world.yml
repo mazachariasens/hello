@@ -21,18 +21,16 @@ jobs:
         run: docker build -t my-nginx-image .
 
       - name: Start my Docker container
-        run: docker run -d --name my-web -p 8080:80 my-nginx-image
+        run: docker run -d --name my-web -p 8080:8000 my-nginx-image
 
-      - name: Wait for web server
+      - name: Check container status
         run: |
-          for i in {1..10}; do
-            if curl --fail http://localhost:8080; then
-              exit 0
-            fi
-            sleep 2
-          done
+          sleep 2
+          docker ps -a
           docker logs my-web
-          exit 1
+
+      - name: Get webpage with curl
+        run: curl --fail --retry 5 --retry-delay 2 --retry-connrefused http://localhost:8080
 
       - name: Remove my Docker container
         if: always()
